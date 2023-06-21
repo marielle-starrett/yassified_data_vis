@@ -1,0 +1,80 @@
+---
+title: "Silly little pie chart"
+format: html
+editor: visual
+---
+
+```{r}
+# Get the Data
+
+# Read in with tidytuesdayR package 
+#install.packages("tidytuesdayR")
+# Install from CRAN via: install.packages("tidytuesdayR")
+# This loads the readme and all the datasets for the week of interest
+
+# Either ISO-8601 date or year/week works!
+
+tuesdata <- tidytuesdayR::tt_load('2023-06-20')
+tuesdata <- tidytuesdayR::tt_load(2023, week = 25)
+
+ufo_sightings <- tuesdata$`ufo_sightings`
+places <- tuesdata$`places`
+day_parts_map <- tuesdata$`day_parts_map`
+
+# Or read in the data manually
+
+ufo_sightings <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-06-20/ufo_sightings.csv')
+places <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-06-20/places.csv')
+day_parts_map <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2023/2023-06-20/day_parts_map.csv')
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+library(scales)
+```
+
+```{r}
+ufo_sightings|>
+  select(has_images)|>
+  count(has_images)|>
+  rbind(c("TRUE", "0"))-> images_df
+  
+```
+
+```{r}
+images_df <-as.data.frame(images_df)
+```
+
+```{r}
+ggplot(images_df, mapping = aes(x = "",
+                                y = as.numeric(n),
+                                fill = has_images,
+                                ))+
+  geom_bar(width = 1,
+           stat = "identity",
+           )+
+  coord_polar("y",
+              start = 0)+
+  labs(x = "",
+       y= "",
+       fill = "Has Image(s) of sighting",
+       title = "Pics or it Didn't Happen",
+       subtitle = "Percent of UFO sightings that have images of the sighting",
+       caption = "Data from Tidy Tuesday June 20th 2023")+
+  theme_void()+
+  scale_fill_manual(values = c("steelblue1", "steelblue4"))+
+  geom_text(aes(label = percent(percent[1]/100)))
+```
+
+```{r}
+images_df
+```
+
+```{r}
+images_df|>
+  mutate(images_df, n_numeric = as.numeric(n))|>
+  mutate(images_df, percent = n_numeric / sum(n_numeric) * 100)-> images_df
+```
