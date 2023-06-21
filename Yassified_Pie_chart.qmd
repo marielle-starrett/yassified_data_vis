@@ -63,19 +63,15 @@ ggplot(images_df, mapping = aes(x = "",
        y= "",
        fill = "Has Image(s) of sighting",
        title = "Pics or it Didn't Happen",
-       subtitle = "Percent of UFO sightings that have images of the sighting")+
+       subtitle = "Percent of UFO sightings that have images of the sighting",
+       caption = "Data from Tidy Tuesday June 20th 2023")+
   theme_void()+
-  scale_fill_manual(values = c("steelblue1", "steelblue4"))
+  scale_fill_manual(values = c("steelblue1", "steelblue4"))+
+  geom_text(aes(label = (percent(percent[1]/100))))
 ```
 
 ```{r}
 images_df
-```
-
-```{r}
-images_df|>
-  mutate(images_df, n_numeric = as.numeric(n))|>
-  mutate(images_df, percent = n_numeric / sum(n_numeric) * 100)-> images_df
 ```
 
 ```{r}
