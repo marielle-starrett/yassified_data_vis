@@ -30,7 +30,6 @@ day_parts_map <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 
 ```{r}
 library(tidyverse)
-
 ```
 
 ```{r}
@@ -67,7 +66,7 @@ ggplot(images_df, mapping = aes(x = "",
        caption = "Data from Tidy Tuesday June 20th 2023")+
   theme_void()+
   scale_fill_manual(values = c("steelblue1", "steelblue4"))+
-  geom_text(aes(label = (percent(percent[1]/100))))
+  geom_text(aes(label = percent(percent[1]/100)))
 ```
 
 ```{r}
