@@ -1,0 +1,19 @@
+---
+title: "Graph Makeover"
+author: "Lori Yoder"
+format: html
+editor: visual
+---
+
+```{r Alien Sightings Graph}
+ufos4 |>
+  filter(aliens == "TRUE") |>
+  ggplot(mapping = aes(x = reported_date_time, fill = day_part)) +
+  geom_histogram() +
+  labs(x = "Year of Sighting", y = "Number of Alien Sightings", title = "Alien Sightings", caption = "Data From Tidy Tuesday 6_20_23", fill = "Time of Day")
+```
+
+```{r}
+install.packages("ggrepel")
+install.packages("viridis")
+```
